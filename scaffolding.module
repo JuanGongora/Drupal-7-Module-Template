@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Demonstrate basic module scaffolding.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function scaffolding_menu() {
+  // Module settings.
+  $items['admin/settings/scaffolding'] = array(
+    'title' => 'Scaffolding', //this is the heading for the module
+    'description' => 'Scaffolding configuration',
+    'page callback' => 'drupal_get_form', //internal api function that renders
+    'page arguments' => array('scaffolding_admin_settings'), //allows us to call arguments back to the page callback function
+    'access arguments' => array('access administration pages'), //allows us to set permissions that are required in order for us to view the page
+    'file' => 'scaffolding.admin.inc', //tells Drupal what file to find this function in the "page callback" line. So we're putting this in a separate file outside of our "dot module" file so it doesn't get loaded on every page.
+    'file path' => drupal_get_path('module', 'scaffolding'), //tells Drupal where to fine the 'file' key above
+  );
+  return $items;
+}
+
+
+/**
+ * Implements hook_help().
+ *
+ * allows us to register help text to display on different pages and to be
+ * aggregated in particular ways so that help can be viewed in multiple formats
+ *
+ */
+function scaffolding_help($path, $arg) {
+  switch ($path) {
+    case 'admin/settings/scaffolding':
+      return t('This is some help text for the scaffolding settings page.');
+
+    case 'admin/help#scaffolding': //the # is required to associate a module name as a category in the 'help' page
+      $output = '<p>' . t('This is help text for the scaffolding help page') . '</p>';
+      return $output;
+  }
+}
